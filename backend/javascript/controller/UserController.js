@@ -45,6 +45,15 @@ dotenv.config();
 var UserController = /** @class */ (function () {
     function UserController() {
     }
+    /**
+     * For signup
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @returns {Promise<boolean>}
+     * @memberof UserController
+     */
     UserController._signUp = function (req, res, next) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
@@ -77,6 +86,15 @@ var UserController = /** @class */ (function () {
             });
         });
     };
+    /**
+     * For login
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @returns {(Promise<boolean|null>)}
+     * @memberof UserController
+     */
     UserController._login = function (req, res, next) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {

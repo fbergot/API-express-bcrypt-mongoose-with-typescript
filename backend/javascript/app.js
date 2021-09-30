@@ -20,6 +20,7 @@ var options = {
     useNewUrlParser: true,
     useUnifiedTopology: true
 };
+// connection database
 Connection_1["default"]._connect(process.env.mongoUrl || "", options, mongoose);
 var app = express();
 var utils = Utils_1["default"]._getInstance();

@@ -43,6 +43,14 @@ var JSONwebToken_1 = require("../class/JSONwebToken");
 var Auth = /** @class */ (function () {
     function Auth() {
     }
+    /**
+     * For verif auth (with token)
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @memberof Auth
+     */
     Auth._verifAuth = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var token, userId, decodedToken, e_1;
