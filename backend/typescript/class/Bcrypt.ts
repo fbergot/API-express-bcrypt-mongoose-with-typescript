@@ -32,15 +32,17 @@ export default class Bcrypt {
      * @memberof Bcrypt
      */
     async bcyptHash(data: string, salt: number): Promise<string> {
-        try {
-            const hash = await this.bcryptModule.hash(data, salt);
-            return hash;
-        } catch (e:any) {
-            throw e;
-        }           
+            return await this.bcryptModule.hash(data, salt);      
     }
 
-    async bcryptCompare(plaintextData: string, hash: any): Promise<boolean> {
-        return await this.bcryptModule.compare(plaintextData, hash);
+    /**
+     * Compare plaintext data with hash data
+     * @param {string} plaintextData
+     * @param {string} hash
+     * @returns {Promise<boolean>}
+     * @memberof Bcrypt
+     */
+    async bcryptCompare(plaintextData: string, hash: string): Promise<boolean> {
+            return await this.bcryptModule.compare(plaintextData, hash);       
     }
 }

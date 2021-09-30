@@ -105,10 +105,7 @@ var UserController = /** @class */ (function () {
                             res.status(401).json({ message: UserController._badPassword });
                             return [2 /*return*/, false];
                         }
-                        res.status(200).json({
-                            userId: user._id,
-                            token: "TOKEN"
-                        });
+                        res.status(200).json({ userId: user._id, token: "TOKEN" });
                         return [2 /*return*/, true];
                     case 5:
                         e_3 = _a.sent();

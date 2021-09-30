@@ -63,23 +63,21 @@ var Bcrypt = /** @class */ (function () {
      */
     Bcrypt.prototype.bcyptHash = function (data, salt) {
         return __awaiter(this, void 0, void 0, function () {
-            var hash, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.bcryptModule.hash(data, salt)];
-                    case 1:
-                        hash = _a.sent();
-                        return [2 /*return*/, hash];
-                    case 2:
-                        e_1 = _a.sent();
-                        throw e_1;
-                    case 3: return [2 /*return*/];
+                    case 0: return [4 /*yield*/, this.bcryptModule.hash(data, salt)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
+    /**
+     * Compare plaintext data with hash data
+     * @param {string} plaintextData
+     * @param {string} hash
+     * @returns {Promise<boolean>}
+     * @memberof Bcrypt
+     */
     Bcrypt.prototype.bcryptCompare = function (plaintextData, hash) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
