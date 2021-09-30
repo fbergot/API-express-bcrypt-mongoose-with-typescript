@@ -6,7 +6,7 @@ var Utils_1 = require("./class/Utils");
 var dotenv = require("dotenv");
 dotenv.config();
 var server = http.createServer(app_1["default"]);
-var utils = new Utils_1["default"](server);
+var utils = Utils_1["default"]._getInstance(server);
 var port = utils.normalizePort(process.env.PORT || '3000');
 server.on("error", utils.errorHandler);
 server.on("listening", function () { return utils.logHandler(port); });

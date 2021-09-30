@@ -29,4 +29,12 @@ export default class JSONWebToken {
             })
         })
     }
+
+    verifyJWT(token: string, secret: jwt.Secret|jwt.GetPublicKeyOrSecret, options: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.JWT.verify(token, secret, options, (err, decoded) => {
+                err ? reject(err) : resolve(decoded)
+            })
+        })
+    }
 }

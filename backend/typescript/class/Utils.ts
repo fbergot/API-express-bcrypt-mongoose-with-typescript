@@ -7,9 +7,26 @@ import * as express from 'express';
  * @class Utils
  */
 export default class Utils {
+
     server: http.Server|undefined;
     port: null | number;
 
+    static _instance: null | Utils = null;
+    
+    /**
+     * Get an unique instance of Utils (singleton)
+     * @static
+     * @param {http.Server} [app]
+     * @returns
+     * @memberof Utils
+     */
+    static _getInstance(app?: http.Server) {
+        if (!this._instance) {
+            this._instance = new Utils(app = undefined);
+            return this._instance;
+        }
+        return this._instance;
+    }
     /**
      *Creates an instance of Utils.
      * @param {http.Server} [server]
@@ -89,5 +106,11 @@ export default class Utils {
         res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
         next();
+    }
+
+    getTokenInHeader(req: express.Request, errorMessage: string): string {
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) throw Error(`${errorMessage}`);
+        return token;
     }
 }

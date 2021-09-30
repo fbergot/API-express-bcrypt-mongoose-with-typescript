@@ -19,6 +19,14 @@ var JSONWebToken = /** @class */ (function () {
             });
         });
     };
+    JSONWebToken.prototype.verifyJWT = function (token, secret, options) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.JWT.verify(token, secret, options, function (err, decoded) {
+                err ? reject(err) : resolve(decoded);
+            });
+        });
+    };
     JSONWebToken._instance = null;
     return JSONWebToken;
 }());

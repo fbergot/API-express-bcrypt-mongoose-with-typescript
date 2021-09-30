@@ -16,6 +16,20 @@ var Utils = /** @class */ (function () {
         this.port = null;
     }
     /**
+     * Get an unique instance of Utils (singleton)
+     * @static
+     * @param {http.Server} [app]
+     * @returns
+     * @memberof Utils
+     */
+    Utils._getInstance = function (app) {
+        if (!this._instance) {
+            this._instance = new Utils(app = undefined);
+            return this._instance;
+        }
+        return this._instance;
+    };
+    /**
      * Normalize port
      * @param {string} val
      * @returns {(number | boolean)}
@@ -82,6 +96,14 @@ var Utils = /** @class */ (function () {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
         next();
     };
+    Utils.prototype.getTokenInHeader = function (req, errorMessage) {
+        var _a;
+        var token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
+        if (!token)
+            throw Error("" + errorMessage);
+        return token;
+    };
+    Utils._instance = null;
     return Utils;
 }());
 exports["default"] = Utils;

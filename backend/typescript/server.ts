@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 
 dotenv.config();
 const server: http.Server = http.createServer(app);
-const utils: Utils = new Utils(server);
+const utils: Utils = Utils._getInstance(server);
 const port = utils.normalizePort(process.env.PORT || '3000');
 
 server.on("error", utils.errorHandler);

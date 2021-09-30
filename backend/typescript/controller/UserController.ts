@@ -5,8 +5,6 @@ import * as dotenv from "dotenv";
 import { modelUser, User } from "../models/user";
 import Bcrypt from "../class/Bcrypt";
 import JSONWebToken from '../class/JSONwebToken';
-import * as crypto from 'crypto';
-import Crypto from '../class/Crypto';
 
 dotenv.config();
 
@@ -53,7 +51,7 @@ export default class UserController {
               res.status(401).json({ message: UserController._badPassword });
               return false;
             }
-            const secret = process.env.SECRET ?? await Crypto.generateSecretRandom(crypto, 48, 'hex');
+            const secret = process.env.SECRET ?? "";
             const paylaodSigned = await JSONWebToken._getInstance(jwt).signJWT({ userId: user._id, token: "TOKEN" }, secret, {expiresIn: '24h'});
             res.status(200).json({ userId: user.id, token: paylaodSigned });
             return true;
