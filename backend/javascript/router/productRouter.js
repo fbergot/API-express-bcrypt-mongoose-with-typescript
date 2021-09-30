@@ -1,0 +1,12 @@
+"use strict";
+exports.__esModule = true;
+var express = require("express");
+var ProductController_1 = require("../controller/ProductController");
+var router = express.Router();
+router.get("/:id", ProductController_1["default"].findOne);
+router.get("/", ProductController_1["default"].find);
+;
+router.post("/", ProductController_1["default"].save);
+router.put("/:id", ProductController_1["default"].update);
+router["delete"]("/:id", ProductController_1["default"]["delete"]);
+exports["default"] = router;
