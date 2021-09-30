@@ -37,6 +37,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var bcrypt = require("bcrypt");
+/**
+ * For all brypt operation
+ * @export
+ * @class Bcrypt
+ */
 var Bcrypt = /** @class */ (function () {
     /**
      *Creates an instance of Bcrypt.
@@ -46,6 +51,12 @@ var Bcrypt = /** @class */ (function () {
     function Bcrypt(bcryptModule) {
         this.bcryptModule = bcryptModule;
     }
+    /**
+     * get an unique instance of Bcrypt
+     * @static
+     * @returns {Bcrypt}
+     * @memberof Bcrypt
+     */
     Bcrypt._getInstance = function () {
         if (!this._instance) {
             this._instance = new Bcrypt(bcrypt);

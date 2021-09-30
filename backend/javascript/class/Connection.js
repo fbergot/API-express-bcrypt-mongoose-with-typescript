@@ -36,9 +36,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+/**
+ * For connection database
+ * @export
+ * @class Connection
+ */
 var Connection = /** @class */ (function () {
     function Connection() {
     }
+    /**
+     * Connection DB
+     * @static
+     * @param {string} urlMongoDb
+     * @param {{}} options
+     * @param {Mongoose} mongoose
+     * @returns {Promise<boolean>}
+     * @memberof Connection
+     */
     Connection._connect = function (urlMongoDb, options, mongoose) {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;

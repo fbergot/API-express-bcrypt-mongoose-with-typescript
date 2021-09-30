@@ -28,7 +28,7 @@ export default class ProductController {
         const docProduct = new ProductModel({ ...req.body });
         docProduct.save()
             .then(() => res.status(201).json({ message: 'Objet enregistré' }))
-            .catch((e: mongoose.Error) => res.status(400).json({ error: e }));
+            .catch((e: mongoose.Error) => res.status(400).json({ error: e.message }));
     
     }
 

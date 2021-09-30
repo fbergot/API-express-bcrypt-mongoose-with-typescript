@@ -1,10 +1,21 @@
 import * as bcrypt from "bcrypt";
 
+/**
+ * For all brypt operation
+ * @export
+ * @class Bcrypt
+ */
 export default class Bcrypt {
     bcryptModule: typeof bcrypt;
 
     static _instance: null | Bcrypt = null;
 
+    /**
+     * get an unique instance of Bcrypt
+     * @static
+     * @returns {Bcrypt}
+     * @memberof Bcrypt
+     */
     static _getInstance(): Bcrypt {
         if (!this._instance) {
             this._instance = new Bcrypt(bcrypt);

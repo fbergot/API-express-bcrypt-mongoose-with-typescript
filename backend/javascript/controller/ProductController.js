@@ -34,7 +34,7 @@ var ProductController = /** @class */ (function () {
         // new doc
         var docProduct = new product_1.modelProd(__assign({}, req.body));
         docProduct.save()
-            .then(function () { return res.status(201).json({ message: 'Objet enregistré' }); })["catch"](function (e) { return res.status(400).json({ error: e }); });
+            .then(function () { return res.status(201).json({ message: 'Objet enregistré' }); })["catch"](function (e) { return res.status(400).json({ error: e.message }); });
     };
     ProductController.update = function (req, res, next) {
         var filter = { _id: req.params.id };
