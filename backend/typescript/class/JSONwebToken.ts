@@ -22,7 +22,11 @@ export default class JSONWebToken {
         this.JWT = JWT_module;
     }
     
-    async signJWT(payload: Payload, secret: string, options: any): Promise<string> {
-            return await this.JWT.sign(payload, secret, options);
+    signJWT(payload: Payload, secret: string, options: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.JWT.sign(payload, secret, options, (err, token) => {
+                err ? reject(err) : resolve(token);
+            })
+        })
     }
 }
