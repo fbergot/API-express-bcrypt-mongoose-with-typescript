@@ -24,6 +24,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
+// connection database
 Connection._connect(process.env.mongoUrl || "", options, mongoose);
 
 const app: express.Application = express();

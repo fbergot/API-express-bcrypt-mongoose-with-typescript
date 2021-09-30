@@ -13,6 +13,15 @@ export default class UserController {
     static _userNotPresent = 'Utilisateur non trouvé';
     static _badPassword = 'Mot de passe incorrect';
 
+    /**
+     * For signup 
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @returns {Promise<boolean>}
+     * @memberof UserController
+     */
     static async _signUp(req: express.Request, res: express.Response, next: CallableFunction): Promise<boolean> {
         const salt = process.env.SALT ?? "10";
         try {
@@ -32,6 +41,15 @@ export default class UserController {
         }        
     }
 
+    /**
+     * For login
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @returns {(Promise<boolean|null>)}
+     * @memberof UserController
+     */
     static async _login(req: express.Request, res: express.Response, next: CallableFunction): Promise<boolean|null> {
         try {
             const filter:mongoose.FilterQuery<User> = { email: req.body.email };

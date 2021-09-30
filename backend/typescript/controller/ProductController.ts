@@ -9,12 +9,28 @@ import { modelProd as ProductModel } from "../models/product";
  */
 export default class ProductController {
 
+    /**
+     * For find items
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @memberof ProductController
+     */
     static find(req: express.Request, res: express.Response, next: CallableFunction): void {
         ProductModel.find()
             .then((products) => res.status(200).json(products))
             .catch((e: mongoose.Error) => res.status(400).json({ error: e.message }));
     }
 
+    /**
+     * For find one item
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @memberof ProductController
+     */
     static findOne(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
         ProductModel.findOne(filter)
@@ -22,6 +38,14 @@ export default class ProductController {
             .catch((e: mongoose.Error) => res.status(404).json({ error: e.message }));
     }
 
+    /**
+     * For save item
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @memberof ProductController
+     */
     static save(req: express.Request, res: express.Response, next: CallableFunction): void {   
         delete req.body._id;
         // new doc
@@ -32,6 +56,14 @@ export default class ProductController {
     
     }
 
+    /**
+     * For update item
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @memberof ProductController
+     */
     static update(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
         ProductModel.updateOne(filter, { ...req.body, ...filter })
@@ -39,6 +71,14 @@ export default class ProductController {
             .catch((e: mongoose.Error) => res.status(400).json({ error: e.message }));
     }
 
+    /**
+     * For delete
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @memberof ProductController
+     */
     static delete(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
         ProductModel.deleteOne(filter)

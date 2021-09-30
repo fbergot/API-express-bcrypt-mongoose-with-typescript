@@ -12,6 +12,14 @@ export default class Auth {
     static _errorMessageToken = "Aucun token dans le header authorization ou mal formé";
     static _userIdNotCorrect = "User ID non valable";
 
+    /**
+     * For verif auth (with token)
+     * @static
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {CallableFunction} next
+     * @memberof Auth
+     */
     static async _verifAuth(req: express.Request, res: express.Response, next: CallableFunction) {
         try {
             const token = Auth._utils._getInstance().getTokenInHeader(req, Auth._errorMessageToken);
