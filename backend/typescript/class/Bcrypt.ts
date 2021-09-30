@@ -27,7 +27,6 @@ export default class Bcrypt {
      * Hash data
      * @param {string} data
      * @param {number} salt
-     * @throw 
      * @returns {Promise<string>}
      * @memberof Bcrypt
      */

@@ -36,9 +36,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+var jwt = require("jsonwebtoken");
+var dotenv = require("dotenv");
 var user_1 = require("../models/user");
 var Bcrypt_1 = require("../class/Bcrypt");
-var dotenv = require("dotenv");
+var JSONwebToken_1 = require("../class/JSONwebToken");
+var crypto = require("crypto");
+var Crypto_1 = require("../class/Crypto");
 dotenv.config();
 var UserController = /** @class */ (function () {
     function UserController() {
@@ -76,42 +80,54 @@ var UserController = /** @class */ (function () {
         });
     };
     UserController._login = function (req, res, next) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var filter, user, e_2, userPassword, resultCompare, e_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var filter, user, e_2, userPassword, secret, _b, paylaodSigned, e_3;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _c.trys.push([0, 2, , 3]);
                         filter = { email: req.body.email };
                         return [4 /*yield*/, user_1.modelUser.findOne(filter)];
                     case 1:
-                        user = _a.sent();
+                        user = _c.sent();
                         if (!user) {
                             res.status(401).json({ message: UserController._userNotPresent });
                             return [2 /*return*/, null];
                         }
                         return [3 /*break*/, 3];
                     case 2:
-                        e_2 = _a.sent();
+                        e_2 = _c.sent();
                         res.status(500).json({ error: e_2.message });
                         return [2 /*return*/, null];
                     case 3:
-                        _a.trys.push([3, 5, , 6]);
+                        _c.trys.push([3, 9, , 10]);
                         userPassword = user.password;
                         return [4 /*yield*/, Bcrypt_1["default"]._getInstance().bcryptCompare(req.body.password, userPassword)];
                     case 4:
-                        resultCompare = _a.sent();
-                        if (!resultCompare) {
+                        if (!(_c.sent())) {
                             res.status(401).json({ message: UserController._badPassword });
                             return [2 /*return*/, false];
                         }
-                        res.status(200).json({ userId: user._id, token: "TOKEN" });
+                        if (!((_a = process.env.SECRET) !== null && _a !== void 0)) return [3 /*break*/, 5];
+                        _b = _a;
+                        return [3 /*break*/, 7];
+                    case 5: return [4 /*yield*/, Crypto_1["default"].generateSecretRandom(crypto, 48, 'hex')];
+                    case 6:
+                        _b = _c.sent();
+                        _c.label = 7;
+                    case 7:
+                        secret = _b;
+                        return [4 /*yield*/, JSONwebToken_1["default"]._getInstance(jwt).signJWT({ userId: user._id, token: "TOKEN" }, secret, { expiresIn: '24h' })];
+                    case 8:
+                        paylaodSigned = _c.sent();
+                        res.status(200).json({ userId: user.id, token: paylaodSigned });
                         return [2 /*return*/, true];
-                    case 5:
-                        e_3 = _a.sent();
+                    case 9:
+                        e_3 = _c.sent();
                         res.status(500).json({ error: e_3.message });
                         return [2 /*return*/, null];
-                    case 6: return [2 /*return*/];
+                    case 10: return [2 /*return*/];
                 }
             });
         });

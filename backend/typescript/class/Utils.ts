@@ -90,6 +90,4 @@ export default class Utils {
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
         next();
     }
-
-
 }

@@ -36,58 +36,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var bcrypt = require("bcrypt");
-var Bcrypt = /** @class */ (function () {
-    /**
-     *Creates an instance of Bcrypt.
-     * @param {typeof bcrypt} bcryptModule
-     * @memberof Bcrypt
-     */
-    function Bcrypt(bcryptModule) {
-        this.bcryptModule = bcryptModule;
+var JSONWebToken = /** @class */ (function () {
+    function JSONWebToken(JWT_module) {
+        this.JWT = JWT_module;
     }
-    Bcrypt._getInstance = function () {
+    JSONWebToken._getInstance = function (JsonWebToken_module) {
         if (!this._instance) {
-            this._instance = new Bcrypt(bcrypt);
+            this._instance = new JSONWebToken(JsonWebToken_module);
             return this._instance;
         }
         return this._instance;
     };
-    /**
-     * Hash data
-     * @param {string} data
-     * @param {number} salt
-     * @returns {Promise<string>}
-     * @memberof Bcrypt
-     */
-    Bcrypt.prototype.bcyptHash = function (data, salt) {
+    JSONWebToken.prototype.signJWT = function (payload, secret, options) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.bcryptModule.hash(data, salt)];
+                    case 0: return [4 /*yield*/, this.JWT.sign(payload, secret, options)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    /**
-     * Compare plaintext data with hash data
-     * @param {string} plaintextData
-     * @param {string} hash
-     * @returns {Promise<boolean>}
-     * @memberof Bcrypt
-     */
-    Bcrypt.prototype.bcryptCompare = function (plaintextData, hash) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.bcryptModule.compare(plaintextData, hash)];
-                    case 1: return [2 /*return*/, _a.sent()];
-                }
-            });
-        });
-    };
-    Bcrypt._instance = null;
-    return Bcrypt;
+    JSONWebToken._instance = null;
+    return JSONWebToken;
 }());
-exports["default"] = Bcrypt;
+exports["default"] = JSONWebToken;
