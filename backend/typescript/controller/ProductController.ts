@@ -1,23 +1,26 @@
 import * as express from "express";
 import * as mongoose from "mongoose";
 import { modelProd as ProductModel } from "../models/product";
-
+import { BasicController } from '../interface/interface';
 /**
  * Controller for all routes
  * @export
  * @class ProductController
  */
-export default class ProductController {
 
+
+export default class ProductController implements BasicController { 
+
+    constructor() {}
     /**
-     * For find items
+     * find one product
      * @static
      * @param {express.Request} req
      * @param {express.Response} res
      * @param {CallableFunction} next
      * @memberof ProductController
      */
-    static find(req: express.Request, res: express.Response, next: CallableFunction): void {
+    find(req: express.Request, res: express.Response, next: CallableFunction): void {
         ProductModel.find()
             .then((products) => res.status(200).json(products))
             .catch((e: mongoose.Error) => res.status(400).json({ error: e.message }));
@@ -31,7 +34,7 @@ export default class ProductController {
      * @param {CallableFunction} next
      * @memberof ProductController
      */
-    static findOne(req: express.Request, res: express.Response, next: CallableFunction): void {
+    findOne(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
         ProductModel.findOne(filter)
             .then((product) => res.status(200).json(product))
@@ -46,7 +49,7 @@ export default class ProductController {
      * @param {CallableFunction} next
      * @memberof ProductController
      */
-    static save(req: express.Request, res: express.Response, next: CallableFunction): void {
+    save(req: express.Request, res: express.Response, next: CallableFunction): void {
         // with multer, req.body change (req.body.thing is a string of body with image in)
         const objRequest = JSON.parse(req.body.thing);
         delete objRequest._id;
@@ -69,7 +72,7 @@ export default class ProductController {
      * @param {CallableFunction} next
      * @memberof ProductController
      */
-    static update(req: express.Request, res: express.Response, next: CallableFunction): void {
+    update(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
         ProductModel.updateOne(filter, { ...req.body, ...filter })
             .then(() => res.status(200).json({ message: 'Objet modifié' }))
@@ -84,7 +87,7 @@ export default class ProductController {
      * @param {CallableFunction} next
      * @memberof ProductController
      */
-    static delete(req: express.Request, res: express.Response, next: CallableFunction): void {
+    delete(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
         ProductModel.deleteOne(filter)
             .then(product => res.status(200).json(product))

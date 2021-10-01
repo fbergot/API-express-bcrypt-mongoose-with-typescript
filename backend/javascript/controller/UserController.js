@@ -41,20 +41,21 @@ var dotenv = require("dotenv");
 var user_1 = require("../models/user");
 var Bcrypt_1 = require("../class/Bcrypt");
 var JSONwebToken_1 = require("../class/JSONwebToken");
+var enum_1 = require("../enum/enum");
 dotenv.config();
 var UserController = /** @class */ (function () {
     function UserController() {
     }
+    ;
     /**
      * For signup
-     * @static
      * @param {express.Request} req
      * @param {express.Response} res
      * @param {CallableFunction} next
      * @returns {Promise<boolean>}
      * @memberof UserController
      */
-    UserController._signUp = function (req, res, next) {
+    UserController.prototype.signUp = function (req, res, next) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
             var salt, hashPassword, user, e_1;
@@ -75,7 +76,7 @@ var UserController = /** @class */ (function () {
                         return [4 /*yield*/, user.save()];
                     case 3:
                         _b.sent();
-                        res.status(201).json({ message: UserController._successMessage });
+                        res.status(201).json({ message: enum_1.MessagesUserController.success });
                         return [2 /*return*/, true];
                     case 4:
                         e_1 = _b.sent();
@@ -88,14 +89,13 @@ var UserController = /** @class */ (function () {
     };
     /**
      * For login
-     * @static
      * @param {express.Request} req
      * @param {express.Response} res
      * @param {CallableFunction} next
      * @returns {(Promise<boolean|null>)}
      * @memberof UserController
      */
-    UserController._login = function (req, res, next) {
+    UserController.prototype.login = function (req, res, next) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
             var filter, user, e_2, userPassword, secret, paylaodSigned, e_3;
@@ -108,7 +108,7 @@ var UserController = /** @class */ (function () {
                     case 1:
                         user = _b.sent();
                         if (!user) {
-                            res.status(401).json({ message: UserController._userNotPresent });
+                            res.status(401).json({ message: enum_1.MessagesUserController.notPresent });
                             return [2 /*return*/, null];
                         }
                         return [3 /*break*/, 3];
@@ -122,7 +122,7 @@ var UserController = /** @class */ (function () {
                         return [4 /*yield*/, Bcrypt_1["default"]._getInstance().bcryptCompare(req.body.password, userPassword)];
                     case 4:
                         if (!(_b.sent())) {
-                            res.status(401).json({ message: UserController._badPassword });
+                            res.status(401).json({ message: enum_1.MessagesUserController.badPassword });
                             return [2 /*return*/, false];
                         }
                         secret = (_a = process.env.SECRET) !== null && _a !== void 0 ? _a : "";
@@ -140,9 +140,6 @@ var UserController = /** @class */ (function () {
             });
         });
     };
-    UserController._successMessage = 'Utilisateur crée';
-    UserController._userNotPresent = 'Utilisateur non trouvé';
-    UserController._badPassword = 'Mot de passe incorrect';
     return UserController;
 }());
 exports["default"] = UserController;
