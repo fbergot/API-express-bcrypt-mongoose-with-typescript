@@ -34,6 +34,7 @@ const uriAuthUser = "/api/auth";
 
 app.use(express.json());
 app.use(utils.setHeadersCORS);
+app.use("/images", express.static('images'))
 
 // add routers
 app.use(uriProduct, ProductRouter);

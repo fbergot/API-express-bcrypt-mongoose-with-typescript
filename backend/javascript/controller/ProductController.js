@@ -54,9 +54,13 @@ var ProductController = /** @class */ (function () {
      * @memberof ProductController
      */
     ProductController.save = function (req, res, next) {
-        delete req.body._id;
+        var _a;
+        // with multer, req.body change (req.body.thing is a string of body with image in)
+        var objRequest = JSON.parse(req.body.thing);
+        delete objRequest._id;
         // new doc
-        var docProduct = new product_1.modelProd(__assign({}, req.body));
+        var dataForModel = __assign(__assign({}, objRequest), { imageUrl: req.protocol + "://" + req.get('host') + "/images/" + ((_a = req.file) === null || _a === void 0 ? void 0 : _a.filename) });
+        var docProduct = new product_1.modelProd(dataForModel);
         docProduct.save()
             .then(function () { return res.status(201).json({ message: 'Objet enregistré' }); })["catch"](function (e) { return res.status(400).json({ error: e.message }); });
     };

@@ -46,14 +46,19 @@ export default class ProductController {
      * @param {CallableFunction} next
      * @memberof ProductController
      */
-    static save(req: express.Request, res: express.Response, next: CallableFunction): void {   
-        delete req.body._id;
+    static save(req: express.Request, res: express.Response, next: CallableFunction): void {
+        // with multer, req.body change (req.body.thing is a string of body with image in)
+        const objRequest = JSON.parse(req.body.thing);
+        delete objRequest._id;
         // new doc
-        const docProduct = new ProductModel({ ...req.body });
+        const dataForModel = {
+            ...objRequest,
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file?.filename}`
+        }
+        const docProduct = new ProductModel(dataForModel);
         docProduct.save()
             .then(() => res.status(201).json({ message: 'Objet enregistré' }))
-            .catch((e: mongoose.Error) => res.status(400).json({ error: e.message }));
-    
+            .catch((e: mongoose.Error) => res.status(400).json({ error: e.message }));    
     }
 
     /**
