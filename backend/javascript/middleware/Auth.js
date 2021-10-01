@@ -73,12 +73,13 @@ var Auth = /** @class */ (function () {
                         }
                         else {
                             next();
+                            return [2 /*return*/, true];
                         }
                         return [3 /*break*/, 3];
                     case 2:
                         e_1 = _a.sent();
                         res.status(401).json({ error: e_1.message || Auth._unauthorized });
-                        return [3 /*break*/, 3];
+                        return [2 /*return*/, null];
                     case 3: return [2 /*return*/];
                 }
             });

@@ -15,12 +15,11 @@ if (!process.env.SECRET) {
     Crypto_1["default"].generateSecretRandom(crypto, 48, "hex")
         .then(function (secretRandom) { return process.env.SECRET = secretRandom; })["catch"](function (err) { return console.error(err.message); });
 }
-// mongo connection
 var options = {
     useNewUrlParser: true,
     useUnifiedTopology: true
 };
-// connection database
+// mongo connection
 Connection_1["default"]._connect(process.env.mongoUrl || "", options, mongoose);
 var app = express();
 var utils = Utils_1["default"]._getInstance();

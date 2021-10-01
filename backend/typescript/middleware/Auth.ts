@@ -20,7 +20,7 @@ export default class Auth {
      * @param {CallableFunction} next
      * @memberof Auth
      */
-    static async _verifAuth(req: express.Request, res: express.Response, next: CallableFunction) {
+    static async _verifAuth(req: express.Request, res: express.Response, next: CallableFunction): Promise<boolean|null> {
         try {
             const token = Auth._utils._getInstance().getTokenInHeader(req, Auth._errorMessageToken);
             let userId: undefined | string;
@@ -34,9 +34,11 @@ export default class Auth {
                 throw Error(`${Auth._userIdNotCorrect}`);
             } else {
                 next();
+                return true;
             }
         } catch (e: any) {
-            res.status(401).json({error: e.message || Auth._unauthorized})
+            res.status(401).json({ error: e.message || Auth._unauthorized })
+            return null;
         }
     }
 }

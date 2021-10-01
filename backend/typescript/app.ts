@@ -18,13 +18,12 @@ if (!process.env.SECRET) {
       .catch(err => console.error(err.message));
 }
 
-// mongo connection
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
-// connection database
+// mongo connection
 Connection._connect(process.env.mongoUrl || "", options, mongoose);
 
 const app: express.Application = express();
