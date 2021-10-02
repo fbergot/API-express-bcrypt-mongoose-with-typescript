@@ -10,30 +10,14 @@ import { PayloadInterface } from '../interface/interface';
 export default class JSONWebToken {
 
     JWT: typeof jwt;
-    static _instance: null | JSONWebToken = null;
-    
-    /**
-     * Get an unique instance of JSONWebToken (singleton)
-     * @static
-     * @param {typeof jwt} JsonWebToken_module
-     * @returns
-     * @memberof JSONWebToken
-     */
-    static _getInstance(JsonWebToken_module: typeof jwt) {
-        if (!this._instance) {
-            this._instance = new JSONWebToken(JsonWebToken_module);
-            return this._instance;
-        }
-        return this._instance;
-    }
 
     /**
      *Creates an instance of JSONWebToken.
      * @param {typeof jwt} JWT_module
      * @memberof JSONWebToken
      */
-    constructor(JWT_module: typeof jwt) {
-        this.JWT = JWT_module;
+    constructor(obj: { module: typeof jwt }) {
+        this.JWT = obj.module;
     }
     
     /**

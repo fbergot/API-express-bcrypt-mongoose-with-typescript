@@ -2,12 +2,11 @@
 exports.__esModule = true;
 var http = require("http");
 var app_1 = require("./app");
-var Utils_1 = require("./class/Utils");
 var dotenv = require("dotenv");
+var Factory_1 = require("./class/Factory");
 dotenv.config();
 var server = http.createServer(app_1["default"]);
-var utils = Utils_1["default"]._getInstance(server);
-var port = utils.normalizePort(process.env.PORT || '3000');
-server.on("error", utils.errorHandler);
-server.on("listening", function () { return utils.logHandler(port); });
+var port = Factory_1.factory.InstanceUtils().normalizePort(process.env.PORT || '3000');
+server.on("error", function (err) { return Factory_1.factory.InstanceUtils().errorHandler(err, server, typeof port === "number" ? port : 3000); });
+server.on("listening", function () { return Factory_1.factory.InstanceUtils().logHandler(port, server); });
 server.listen(port);

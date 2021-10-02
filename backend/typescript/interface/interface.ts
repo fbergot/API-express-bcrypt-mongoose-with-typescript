@@ -1,4 +1,6 @@
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
+import { Mongoose } from "mongoose";
+
 
 export interface BasicController {   
     find: (req: Request, res: Response, next: CallableFunction) => void,
@@ -21,3 +23,13 @@ export interface PayloadInterface {
     userId: string,
     token: string
 }
+
+export interface BcryptInterface {
+    bcyptHash: (data: string, salt: number) => Promise<string>,
+    bcryptCompare: (plaintextData: string, hash: string) => Promise<boolean>
+}
+
+export interface BasicConnectionInterface {
+    connect: (urlMongoDb: string, options: {}, mongoose: Mongoose) => Promise<boolean>;
+}
+

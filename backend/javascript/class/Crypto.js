@@ -12,7 +12,7 @@ var Crypto = /** @class */ (function () {
      * @returns {Promise<string>}
      * @memberof Crypto
      */
-    Crypto.generateSecretRandom = function (crypto, bytes, tag) {
+    Crypto.prototype.generateSecretRandom = function (crypto, bytes, tag) {
         return new Promise(function (resolve, reject) {
             crypto.randomBytes(bytes, function (err, buffer) {
                 err ? reject(err) : resolve(buffer.toString(tag));

@@ -1,13 +1,20 @@
 import { Mongoose } from "mongoose";
+import { BasicConnectionInterface } from "../interface/interface";
 
 /**
  * For connection database
  * @export
  * @class Connection
  */
-export default class Connection {
-    static connectionOk = "Connexion mongoDB réussie";
-    static connectionNotOk = "Connexion mongoDB échouée";
+export default class Connection implements BasicConnectionInterface{
+
+    connectionOk: string;
+    connectionNotOk: string;
+
+    constructor() {
+        this.connectionOk = "Connexion mongoDB réussie";
+        this.connectionNotOk = "Connexion mongoDB échouée";      
+    }
 
     /**
      * Connection DB
@@ -18,7 +25,7 @@ export default class Connection {
      * @returns {Promise<boolean>}
      * @memberof Connection
      */
-    static async _connect(urlMongoDb: string, options: {}, mongoose: Mongoose): Promise<boolean> {
+    async connect(urlMongoDb: string, options: {}, mongoose: Mongoose): Promise<boolean> {
         try {
             await mongoose.connect(urlMongoDb, options)
             console.log(`${this.connectionOk}`);

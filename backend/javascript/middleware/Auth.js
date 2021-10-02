@@ -38,8 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var express = require("express");
 var jwt = require("jsonwebtoken");
-var Utils_1 = require("../class/Utils");
-var JSONwebToken_1 = require("../class/JSONwebToken");
+var Factory_1 = require("../class/Factory");
 var Auth = /** @class */ (function () {
     function Auth() {
     }
@@ -58,10 +57,9 @@ var Auth = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        token = Auth._utils._getInstance().getTokenInHeader(req, Auth._errorMessageToken);
+                        token = Auth._utils.getTokenInHeader(req, Auth._errorMessageToken);
                         userId = void 0;
                         return [4 /*yield*/, Auth._JSONWebToken
-                                ._getInstance(Auth._jwt)
                                 .verifyJWT(token, process.env.SECRET || "", {})];
                     case 1:
                         decodedToken = _a.sent();
@@ -87,8 +85,8 @@ var Auth = /** @class */ (function () {
     };
     Auth._express = express;
     Auth._jwt = jwt;
-    Auth._JSONWebToken = JSONwebToken_1["default"];
-    Auth._utils = Utils_1["default"];
+    Auth._JSONWebToken = Factory_1.factory.InstanceJSONWebToken();
+    Auth._utils = Factory_1.factory.InstanceUtils();
     Auth._unauthorized = "Requête non authentifiée";
     Auth._errorMessageToken = "Aucun token dans le header authorization ou mal formé";
     Auth._userIdNotCorrect = "User ID non valable";

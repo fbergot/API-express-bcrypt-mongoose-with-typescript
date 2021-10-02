@@ -2,17 +2,15 @@
 exports.__esModule = true;
 var express = require("express");
 var mongoose = require("mongoose");
-var Connection_1 = require("./class/Connection");
 var productRouter_1 = require("./router/productRouter");
 var userRouter_1 = require("./router/userRouter");
-var Utils_1 = require("./class/Utils");
 var dotenv = require("dotenv");
 var crypto = require("crypto");
-var Crypto_1 = require("./class/Crypto");
+var Factory_1 = require("./class/Factory");
 dotenv.config();
 // check secret in var_env or definition if is absent
 if (!process.env.SECRET) {
-    Crypto_1["default"].generateSecretRandom(crypto, 48, "hex")
+    Factory_1.factory.InstanceCrypto().generateSecretRandom(crypto, 48, "hex")
         .then(function (secretRandom) { return process.env.SECRET = secretRandom; })["catch"](function (err) { return console.error(err.message); });
 }
 var options = {
@@ -20,14 +18,13 @@ var options = {
     useUnifiedTopology: true
 };
 // mongo connection
-Connection_1["default"]._connect(process.env.mongoUrl || "", options, mongoose);
+Factory_1.factory.InstanceConnection().connect(process.env.mongoUrl || "", options, mongoose);
 var app = express();
-var utils = Utils_1["default"]._getInstance();
 // base URL
 var uriProduct = "/api/stuff";
 var uriAuthUser = "/api/auth";
 app.use(express.json());
-app.use(utils.setHeadersCORS);
+app.use(Factory_1.factory.InstanceUtils().setHeadersCORS);
 app.use("/images", express.static('images'));
 // add routers
 app.use(uriProduct, productRouter_1["default"]);

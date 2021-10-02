@@ -1,37 +1,21 @@
 import * as bcrypt from "bcrypt";
+import { BcryptInterface } from "../interface/interface";
 
 /**
  * For all brypt operation
  * @export
  * @class Bcrypt
  */
-export default class Bcrypt {
+export default class Bcrypt implements BcryptInterface {
     bcryptModule: typeof bcrypt;
-
-    static _instance: null | Bcrypt = null;
-
-    /**
-     * get an unique instance of Bcrypt
-     * @static
-     * @returns {Bcrypt}
-     * @memberof Bcrypt
-     */
-    static _getInstance(): Bcrypt {
-        if (!this._instance) {
-            this._instance = new Bcrypt(bcrypt);
-            return this._instance;
-        }
-        return this._instance;
-        
-    }
 
     /**
      *Creates an instance of Bcrypt.
      * @param {typeof bcrypt} bcryptModule
      * @memberof Bcrypt
      */
-    constructor(bcryptModule: typeof bcrypt) {
-        this.bcryptModule = bcryptModule;
+    constructor(obj: {module: typeof bcrypt}) {
+        this.bcryptModule = obj.module;
     }
 
     /**

@@ -43,6 +43,8 @@ exports.__esModule = true;
  */
 var Connection = /** @class */ (function () {
     function Connection() {
+        this.connectionOk = "Connexion mongoDB réussie";
+        this.connectionNotOk = "Connexion mongoDB échouée";
     }
     /**
      * Connection DB
@@ -53,7 +55,7 @@ var Connection = /** @class */ (function () {
      * @returns {Promise<boolean>}
      * @memberof Connection
      */
-    Connection._connect = function (urlMongoDb, options, mongoose) {
+    Connection.prototype.connect = function (urlMongoDb, options, mongoose) {
         return __awaiter(this, void 0, void 0, function () {
             var e_1;
             return __generator(this, function (_a) {
@@ -74,8 +76,6 @@ var Connection = /** @class */ (function () {
             });
         });
     };
-    Connection.connectionOk = "Connexion mongoDB réussie";
-    Connection.connectionNotOk = "Connexion mongoDB échouée";
     return Connection;
 }());
 exports["default"] = Connection;

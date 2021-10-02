@@ -8,14 +8,15 @@ import Utils from './class/Utils';
 import * as dotenv from 'dotenv';
 import * as crypto from 'crypto';
 import Crypto from './class/Crypto';
+import { factory } from './class/Factory';
 
 dotenv.config();
 
 // check secret in var_env or definition if is absent
 if (!process.env.SECRET) {
-    Crypto.generateSecretRandom(crypto, 48, "hex")
-      .then((secretRandom) => process.env.SECRET = secretRandom)
-      .catch(err => console.error(err.message));
+    factory.InstanceCrypto().generateSecretRandom(crypto, 48, "hex")
+      .then((secretRandom: string) => process.env.SECRET = secretRandom)
+      .catch((err: any) => console.error(err.message));
 }
 
 const options = {
@@ -24,16 +25,15 @@ const options = {
 };
 
 // mongo connection
-Connection._connect(process.env.mongoUrl || "", options, mongoose);
+factory.InstanceConnection().connect(process.env.mongoUrl || "", options, mongoose);
 
 const app: express.Application = express();
-const utils: Utils = Utils._getInstance();
 // base URL
 const uriProduct = "/api/stuff";
 const uriAuthUser = "/api/auth";
 
 app.use(express.json());
-app.use(utils.setHeadersCORS);
+app.use(factory.InstanceUtils().setHeadersCORS);
 app.use("/images", express.static('images'))
 
 // add routers

@@ -2,14 +2,14 @@ import * as http from 'http';
 import app from "./app";
 import Utils from "./class/Utils";
 import * as dotenv from 'dotenv';
+import { factory } from './class/Factory';
 
 dotenv.config();
 
 const server: http.Server = http.createServer(app);
-const utils: Utils = Utils._getInstance(server);
-const port = utils.normalizePort(process.env.PORT || '3000');
+const port = factory.InstanceUtils().normalizePort(process.env.PORT || '3000');
 
-server.on("error", utils.errorHandler);
-server.on("listening", () => utils.logHandler(port));
+server.on("error", (err) => factory.InstanceUtils().errorHandler(err, server, typeof port === "number" ? port : 3000));
+server.on("listening", () => factory.InstanceUtils().logHandler(port, server));
 
 server.listen(port);

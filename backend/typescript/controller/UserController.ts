@@ -3,10 +3,9 @@ import * as mongoose from "mongoose";
 import * as jwt from 'jsonwebtoken';
 import * as dotenv from "dotenv";
 import { modelUser, User } from "../models/user";
-import Bcrypt from "../class/Bcrypt";
-import JSONWebToken from '../class/JSONwebToken';
 import { BasicUserController } from '../interface/interface';
 import { MessagesUserController } from '../enum/enum';
+import { factory } from '../class/Factory';
 
 dotenv.config();
 
@@ -25,7 +24,7 @@ export default class UserController implements BasicUserController {
     async signUp(req: express.Request, res: express.Response, next: CallableFunction): Promise<boolean> {
         const salt = process.env.SALT ?? "10";
         try {
-            const hashPassword = await Bcrypt._getInstance().bcyptHash(req.body.password, parseInt(salt));
+            const hashPassword = await factory.InstanceBcrypt().bcyptHash(req.body.password, parseInt(salt));
             const user = new modelUser(
                 {
                     email: req.body.email,
@@ -51,7 +50,7 @@ export default class UserController implements BasicUserController {
      */
     async login(req: express.Request, res: express.Response, next: CallableFunction): Promise<boolean|null> {
         try {
-            const filter:mongoose.FilterQuery<User> = { email: req.body.email };
+            const filter: mongoose.FilterQuery<User> = { email: req.body.email };
             var user = await modelUser.findOne(filter);               
             if (!user) {
                 res.status(401).json({ message: MessagesUserController.notPresent });
@@ -64,12 +63,12 @@ export default class UserController implements BasicUserController {
 
         try {
             const userPassword:string = user.password;
-            if (!await Bcrypt._getInstance().bcryptCompare(req.body.password, userPassword)) {
+            if (!await factory.InstanceBcrypt().bcryptCompare(req.body.password, userPassword)) {
               res.status(401).json({ message: MessagesUserController.badPassword });
               return false;
             }
             const secret = process.env.SECRET ?? "";
-            const paylaodSigned = await JSONWebToken._getInstance(jwt).signJWT({ userId: user._id, token: "TOKEN" }, secret, {expiresIn: '24h'});
+            const paylaodSigned = await factory.InstanceJSONWebToken().signJWT({ userId: user._id, token: "TOKEN" }, secret, {expiresIn: '24h'});
             res.status(200).json({ userId: user.id, token: paylaodSigned });
             return true;
         } catch (e: any) {

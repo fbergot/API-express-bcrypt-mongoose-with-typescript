@@ -11,23 +11,9 @@ var JSONWebToken = /** @class */ (function () {
      * @param {typeof jwt} JWT_module
      * @memberof JSONWebToken
      */
-    function JSONWebToken(JWT_module) {
-        this.JWT = JWT_module;
+    function JSONWebToken(obj) {
+        this.JWT = obj.module;
     }
-    /**
-     * Get an unique instance of JSONWebToken (singleton)
-     * @static
-     * @param {typeof jwt} JsonWebToken_module
-     * @returns
-     * @memberof JSONWebToken
-     */
-    JSONWebToken._getInstance = function (JsonWebToken_module) {
-        if (!this._instance) {
-            this._instance = new JSONWebToken(JsonWebToken_module);
-            return this._instance;
-        }
-        return this._instance;
-    };
     /**
      * sign a token
      * @param {Payload} payload
@@ -60,7 +46,6 @@ var JSONWebToken = /** @class */ (function () {
             });
         });
     };
-    JSONWebToken._instance = null;
     return JSONWebToken;
 }());
 exports["default"] = JSONWebToken;

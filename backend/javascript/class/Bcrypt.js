@@ -36,7 +36,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var bcrypt = require("bcrypt");
 /**
  * For all brypt operation
  * @export
@@ -48,22 +47,9 @@ var Bcrypt = /** @class */ (function () {
      * @param {typeof bcrypt} bcryptModule
      * @memberof Bcrypt
      */
-    function Bcrypt(bcryptModule) {
-        this.bcryptModule = bcryptModule;
+    function Bcrypt(obj) {
+        this.bcryptModule = obj.module;
     }
-    /**
-     * get an unique instance of Bcrypt
-     * @static
-     * @returns {Bcrypt}
-     * @memberof Bcrypt
-     */
-    Bcrypt._getInstance = function () {
-        if (!this._instance) {
-            this._instance = new Bcrypt(bcrypt);
-            return this._instance;
-        }
-        return this._instance;
-    };
     /**
      * Hash data
      * @param {string} data
@@ -98,7 +84,6 @@ var Bcrypt = /** @class */ (function () {
             });
         });
     };
-    Bcrypt._instance = null;
     return Bcrypt;
 }());
 exports["default"] = Bcrypt;

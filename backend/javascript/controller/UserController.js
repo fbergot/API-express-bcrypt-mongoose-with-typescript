@@ -36,12 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var jwt = require("jsonwebtoken");
 var dotenv = require("dotenv");
 var user_1 = require("../models/user");
-var Bcrypt_1 = require("../class/Bcrypt");
-var JSONwebToken_1 = require("../class/JSONwebToken");
 var enum_1 = require("../enum/enum");
+var Factory_1 = require("../class/Factory");
 dotenv.config();
 var UserController = /** @class */ (function () {
     function UserController() {
@@ -66,7 +64,7 @@ var UserController = /** @class */ (function () {
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
-                        return [4 /*yield*/, Bcrypt_1["default"]._getInstance().bcyptHash(req.body.password, parseInt(salt))];
+                        return [4 /*yield*/, Factory_1.factory.InstanceBcrypt().bcyptHash(req.body.password, parseInt(salt))];
                     case 2:
                         hashPassword = _b.sent();
                         user = new user_1.modelUser({
@@ -119,14 +117,14 @@ var UserController = /** @class */ (function () {
                     case 3:
                         _b.trys.push([3, 6, , 7]);
                         userPassword = user.password;
-                        return [4 /*yield*/, Bcrypt_1["default"]._getInstance().bcryptCompare(req.body.password, userPassword)];
+                        return [4 /*yield*/, Factory_1.factory.InstanceBcrypt().bcryptCompare(req.body.password, userPassword)];
                     case 4:
                         if (!(_b.sent())) {
                             res.status(401).json({ message: enum_1.MessagesUserController.badPassword });
                             return [2 /*return*/, false];
                         }
                         secret = (_a = process.env.SECRET) !== null && _a !== void 0 ? _a : "";
-                        return [4 /*yield*/, JSONwebToken_1["default"]._getInstance(jwt).signJWT({ userId: user._id, token: "TOKEN" }, secret, { expiresIn: '24h' })];
+                        return [4 /*yield*/, Factory_1.factory.InstanceJSONWebToken().signJWT({ userId: user._id, token: "TOKEN" }, secret, { expiresIn: '24h' })];
                     case 5:
                         paylaodSigned = _b.sent();
                         res.status(200).json({ userId: user.id, token: paylaodSigned });

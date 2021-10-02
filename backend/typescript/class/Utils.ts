@@ -8,34 +8,12 @@ import * as express from 'express';
  */
 export default class Utils {
 
-    server: http.Server|undefined;
-    port: null | number;
-
-    static _instance: null | Utils = null;
-    
-    /**
-     * Get an unique instance of Utils (singleton)
-     * @static
-     * @param {http.Server} [app]
-     * @returns
-     * @memberof Utils
-     */
-    static _getInstance(app?: http.Server) {
-        if (!this._instance) {
-            this._instance = new Utils(app = undefined);
-            return this._instance;
-        }
-        return this._instance;
-    }
     /**
      *Creates an instance of Utils.
      * @param {http.Server} [server]
      * @memberof Utils
      */
-    constructor(server?: http.Server) {
-        this.server = server;
-        this.port = null;
-    }
+    constructor() {}
 
     /**
      * Normalize port
@@ -45,12 +23,12 @@ export default class Utils {
      */
     normalizePort(val: string): number | boolean {
         if (isNaN(parseInt(val, 10))) {
-            throw Error(`invalid port: ${this.port}`);
+            throw Error(`invalid port`);
         } else {
-            this.port = parseInt(val, 10);
+            var port = parseInt(val, 10);
         }
-        if (this.port >= 0) {
-          return this.port;
+        if (port >= 0) {
+          return port;
         }
         return false;
     }
@@ -60,38 +38,38 @@ export default class Utils {
      * @param {(number|string)} port
      * @memberof Utils
      */
-    logHandler(port: number|boolean): void {
-        const address: any = this.server ? this.server.address() : undefined;
+    logHandler(port: number|boolean, server:http.Server): void {
+        const address: any = server ? server.address() : undefined;
         const bind: string = typeof address === "string" ? `pipe: ${address}` : `port: ${port ? port : "invalid"}`;
         console.log("listening on " + bind);
     }
 
+    
     /**
      * For treatment errors
      * @param {*} error
+     * @param {http.Server} server
      * @memberof Utils
      */
-    errorHandler(error: any): void {
+    errorHandler(error: any, server:http.Server, port: number): void {
         if (error.syscall !== 'listen') {
             throw error;
-        }
-        if (this.server) {
-            var address = this.server.address();            
-            var bind: string = typeof address === "string" ? `pipe: ${address}` : `port: ${this.port}`;
+        }      
+        var address = server.address();            
+        var bind: string = typeof address === "string" ? `pipe: ${address}` : `port: ${port}`;
 
-            switch (error.code) {
-                case 'EACCES':
-                    console.error(bind + ' requires elevated privileges');
-                    process.exit();
-                    break;
-                case 'EADDRINUSE':
-                    console.error(bind + ' is already in use');
-                    process.exit();
-                    break;
-                default:
-                    throw error;            
-            }
-        }
+        switch (error.code) {
+            case 'EACCES':
+                console.error(bind + ' requires elevated privileges');
+                process.exit();
+                break;
+            case 'EADDRINUSE':
+                console.error(bind + ' is already in use');
+                process.exit();
+                break;
+            default:
+                throw error;            
+        }      
     }
 
     /**
