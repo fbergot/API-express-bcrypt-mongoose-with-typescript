@@ -1,6 +1,5 @@
 import * as express from "express";
 import * as mongoose from "mongoose";
-import * as jwt from 'jsonwebtoken';
 import * as dotenv from "dotenv";
 import { modelUser, User } from "../models/user";
 import { BasicUserController } from '../interface/interface';

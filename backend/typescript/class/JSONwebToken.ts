@@ -16,7 +16,7 @@ export default class JSONWebToken {
      * @param {typeof jwt} JWT_module
      * @memberof JSONWebToken
      */
-    constructor(obj: { module: typeof jwt }) {
+    constructor(obj: { module: any }) {
         this.JWT = obj.module;
     }
     

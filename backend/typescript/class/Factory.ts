@@ -9,46 +9,46 @@ import memoized from "../memo/memoized";
 
 
 // type allClass = Bcrypt | Connection | Crypto | JSONWebToken | Utils;
-
-type callUndef = () => undefined;
+type classAllTypes = typeof Bcrypt | typeof Connection | typeof Crypto | typeof JSONWebToken | typeof Utils;
+type callAll= () => classAllTypes;
 
 export default class Factory {
 
-    BcryptMemo: any;
-    ConnectionMemo: any;
-    CryptoMemo: any;
-    JSONWebTokenMemo:  any;
-    UtilsMemo: any;
+    BcryptMemo: () => any;
+    ConnectionMemo: () => any;
+    CryptoMemo: () => any;
+    JSONWebTokenMemo:  () => any;
+    UtilsMemo: () => any;
 
-    constructor(BcryptInstance: callUndef, ConnectionInstance: callUndef,
-        CryptoInstance: callUndef, JSONWebTokenInstance: callUndef, UtilsInstance: callUndef) {
+    constructor(BcryptInstance: callAll, ConnectionInstance: callAll,
+        CryptoInstance: callAll, JSONWebTokenInstance: callAll, UtilsInstance: callAll) {
         this.BcryptMemo = BcryptInstance;
         this.ConnectionMemo = ConnectionInstance;
         this.CryptoMemo = CryptoInstance;
         this.JSONWebTokenMemo = JSONWebTokenInstance;
         this.UtilsMemo = UtilsInstance;
     }
-    InstanceBcrypt() {     
+    InstanceBcrypt(): Bcrypt {     
         return this.BcryptMemo();
     }  
-    InstanceConnection() {     
+    InstanceConnection(): Connection {     
         return this.ConnectionMemo();
     }  
-    InstanceCrypto() {     
+    InstanceCrypto(): Crypto {     
         return this.CryptoMemo();
     }  
-    InstanceJSONWebToken() {     
+    InstanceJSONWebToken(): JSONWebToken {     
         return this.JSONWebTokenMemo();
     }  
-    InstanceUtils() {     
+    InstanceUtils(): Utils {     
         return this.UtilsMemo();
     }  
 }
 
-export const factory = new Factory(
-    memoized(Bcrypt, { module: bcrypt }),
-    memoized(Connection, {}),
-    memoized(Crypto, {}),
+export const factory = new Factory (
+    memoized(Bcrypt, { module:  bcrypt }),
+    memoized(Connection, { module: null }),
+    memoized(Crypto, { module: null }),
     memoized(JSONWebToken, { module: jwt }),
-    memoized(Utils, {})
+    memoized(Utils, { module: null })
 )

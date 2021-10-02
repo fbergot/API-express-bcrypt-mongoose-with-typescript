@@ -35,4 +35,4 @@ var Factory = /** @class */ (function () {
     return Factory;
 }());
 exports["default"] = Factory;
-exports.factory = new Factory((0, memoized_1["default"])(Bcrypt_1["default"], { module: bcrypt }), (0, memoized_1["default"])(Connection_1["default"], {}), (0, memoized_1["default"])(Crypto_1["default"], {}), (0, memoized_1["default"])(JSONwebToken_1["default"], { module: jwt }), (0, memoized_1["default"])(Utils_1["default"], {}));
+exports.factory = new Factory((0, memoized_1["default"])(Bcrypt_1["default"], { module: bcrypt }), (0, memoized_1["default"])(Connection_1["default"], { module: null }), (0, memoized_1["default"])(Crypto_1["default"], { module: null }), (0, memoized_1["default"])(JSONwebToken_1["default"], { module: jwt }), (0, memoized_1["default"])(Utils_1["default"], { module: null }));

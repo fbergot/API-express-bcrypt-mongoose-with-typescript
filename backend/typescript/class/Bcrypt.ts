@@ -14,7 +14,7 @@ export default class Bcrypt implements BcryptInterface {
      * @param {typeof bcrypt} bcryptModule
      * @memberof Bcrypt
      */
-    constructor(obj: {module: typeof bcrypt}) {
+    constructor(obj: { module: any }) {
         this.bcryptModule = obj.module;
     }
 

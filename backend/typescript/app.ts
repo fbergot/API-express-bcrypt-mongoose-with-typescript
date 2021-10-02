@@ -1,13 +1,9 @@
 import * as express from 'express';
 import * as mongoose from "mongoose";
-import * as http from 'http';
-import Connection from './class/Connection';
 import ProductRouter from './router/productRouter';
 import UserRouter from './router/userRouter';
-import Utils from './class/Utils';
 import * as dotenv from 'dotenv';
 import * as crypto from 'crypto';
-import Crypto from './class/Crypto';
 import { factory } from './class/Factory';
 
 dotenv.config();

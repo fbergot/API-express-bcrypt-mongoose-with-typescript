@@ -1,6 +1,5 @@
 import * as http from 'http';
 import app from "./app";
-import Utils from "./class/Utils";
 import * as dotenv from 'dotenv';
 import { factory } from './class/Factory';
 
