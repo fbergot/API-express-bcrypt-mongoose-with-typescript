@@ -25,7 +25,7 @@ export interface PayloadInterface {
 }
 
 export interface BcryptInterface {
-    bcyptHash: (data: string, salt: number) => Promise<string>,
+    bcyptHash: (data: string | Buffer, salt: number) => Promise<string>,
     bcryptCompare: (plaintextData: string, hash: string) => Promise<boolean>
 }
 

@@ -12,6 +12,11 @@ import memoized from "../memo/memoized";
 type classAllTypes = typeof Bcrypt | typeof Connection | typeof Crypto | typeof JSONWebToken | typeof Utils;
 type callAll= () => classAllTypes;
 
+/**
+ * Allow get unique instance memoized of class
+ * @export
+ * @class Factory
+ */
 export default class Factory {
 
     BcryptMemo: () => any;

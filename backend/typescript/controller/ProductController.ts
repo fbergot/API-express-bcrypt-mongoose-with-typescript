@@ -2,13 +2,13 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import { modelProd as ProductModel } from "../models/product";
 import { BasicController } from '../interface/interface';
+import * as fs from 'fs';
+
 /**
- * Controller for all routes
+ * Controller for all routes product
  * @export
  * @class ProductController
  */
-
-
 export default class ProductController implements BasicController { 
 
     constructor() {}
@@ -74,7 +74,16 @@ export default class ProductController implements BasicController {
      */
     update(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
-        ProductModel.updateOne(filter, { ...req.body, ...filter })
+        // test if new image or not
+        const newData = req.file ?
+            {
+                ...JSON.parse(req.body.thing),
+                imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file?.filename}`
+            } :
+            {
+                ...req.body
+            };       
+        ProductModel.updateOne(filter, { ...newData , ...filter })
             .then(() => res.status(200).json({ message: 'Objet modifié' }))
             .catch((e: mongoose.Error) => res.status(400).json({ error: e.message }));
     }
@@ -89,8 +98,20 @@ export default class ProductController implements BasicController {
      */
     delete(req: express.Request, res: express.Response, next: CallableFunction): void {
         const filter = { _id: req.params.id };
-        ProductModel.deleteOne(filter)
-            .then(product => res.status(200).json(product))
-            .catch((e: mongoose.Error) => res.status(400).json({ message: e.message }));
+        // find
+        ProductModel.findOne(filter)
+            .then((product: any) => {
+                const fileName = product.imageUrl.split('/images/')[1];
+                // find filename & remove file
+                fs.unlink(`images/${fileName}`, (err) => {
+                    if (err) throw err;
+                    // delete item according to filter
+                    ProductModel.deleteOne(filter)
+                        .then(objStatus => res.status(200).json(objStatus))                    
+                        .catch((e: mongoose.Error) => res.status(400).json({ message: e.message }));
+                });
+            })           
+            .catch((e: mongoose.Error) => res.status(404).json({ error: e.message }));
+        
     }   
 }

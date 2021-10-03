@@ -38,16 +38,27 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var express = require("express");
 var jwt = require("jsonwebtoken");
+var enum_1 = require("../enum/enum");
 var Factory_1 = require("../class/Factory");
+/**
+ * For auth users
+ * @static
+ * @use enum AuthMessage
+ * @use factory
+ * @use jwt
+ * @use express
+ * @export
+ * @class Auth
+ */
 var Auth = /** @class */ (function () {
     function Auth() {
     }
     /**
      * For verif auth (with token)
-     * @static
      * @param {express.Request} req
      * @param {express.Response} res
      * @param {CallableFunction} next
+     * @return {Promise<boolean>}
      * @memberof Auth
      */
     Auth._verifAuth = function (req, res, next) {
@@ -57,17 +68,16 @@ var Auth = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        token = Auth._utils.getTokenInHeader(req, Auth._errorMessageToken);
+                        token = Auth._UtilsInst.getTokenInHeader(req, enum_1.AuthMessage.errorMessageToken);
                         userId = void 0;
-                        return [4 /*yield*/, Auth._JSONWebToken
-                                .verifyJWT(token, process.env.SECRET || "", {})];
+                        return [4 /*yield*/, Auth._JSONWebTokenInst.verifyJWT(token, process.env.SECRET || "", {})];
                     case 1:
                         decodedToken = _a.sent();
                         if (decodedToken) {
                             userId = decodedToken.userId;
                         }
-                        if (req.body.userId && req.body.userId !== userId) {
-                            throw Error("" + Auth._userIdNotCorrect);
+                        if (req.body.userId && (req.body.userId !== userId)) {
+                            throw Error("" + enum_1.AuthMessage.userIdNotCorrect);
                         }
                         else {
                             next();
@@ -76,20 +86,17 @@ var Auth = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 2:
                         e_1 = _a.sent();
-                        res.status(401).json({ error: e_1.message || Auth._unauthorized });
-                        return [2 /*return*/, null];
+                        res.status(401).json({ error: e_1.message || enum_1.AuthMessage.unauthorized });
+                        return [2 /*return*/, false];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    Auth._express = express;
-    Auth._jwt = jwt;
-    Auth._JSONWebToken = Factory_1.factory.InstanceJSONWebToken();
-    Auth._utils = Factory_1.factory.InstanceUtils();
-    Auth._unauthorized = "Requête non authentifiée";
-    Auth._errorMessageToken = "Aucun token dans le header authorization ou mal formé";
-    Auth._userIdNotCorrect = "User ID non valable";
+    Auth._expressMod = express;
+    Auth._jwtMod = jwt;
+    Auth._UtilsInst = Factory_1.factory.InstanceUtils();
+    Auth._JSONWebTokenInst = Factory_1.factory.InstanceJSONWebToken();
     return Auth;
 }());
 exports["default"] = Auth;

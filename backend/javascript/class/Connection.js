@@ -48,7 +48,6 @@ var Connection = /** @class */ (function () {
     }
     /**
      * Connection DB
-     * @static
      * @param {string} urlMongoDb
      * @param {{}} options
      * @param {Mongoose} mongoose

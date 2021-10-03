@@ -5,7 +5,6 @@ var Crypto = /** @class */ (function () {
     }
     /**
      * Generate a random secret
-     * @static
      * @param {*} crypto
      * @param {number} bytes
      * @param {(BufferEncoding | undefined)} tag

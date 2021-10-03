@@ -1,44 +1,49 @@
 import * as express from 'express';
 import * as jwt from "jsonwebtoken";
-import Utils from '../class/Utils';
-import JSONWebToken from '../class/JSONwebToken';
+import { AuthMessage } from '../enum/enum';
 import { factory } from '../class/Factory';
 
+/**
+ * For auth users
+ * @static
+ * @use enum AuthMessage
+ * @use factory
+ * @use jwt
+ * @use express
+ * @export
+ * @class Auth
+ */
 export default class Auth {
-    static _express: typeof express = express;
-    static _jwt: typeof jwt = jwt;
-    static _JSONWebToken: any= factory.InstanceJSONWebToken();
-    static _utils: any = factory.InstanceUtils();
-    static _unauthorized = "Requête non authentifiée";
-    static _errorMessageToken = "Aucun token dans le header authorization ou mal formé";
-    static _userIdNotCorrect = "User ID non valable";
-
+    static _expressMod = express;
+    static _jwtMod =  jwt;
+    static _UtilsInst = factory.InstanceUtils();
+    static _JSONWebTokenInst = factory.InstanceJSONWebToken();
     /**
      * For verif auth (with token)
-     * @static
      * @param {express.Request} req
      * @param {express.Response} res
      * @param {CallableFunction} next
+     * @return {Promise<boolean>}
      * @memberof Auth
      */
-    static async _verifAuth(req: express.Request, res: express.Response, next: CallableFunction): Promise<boolean|null> {
+
+    static async _verifAuth (req: express.Request, res: express.Response, next: CallableFunction) :Promise<boolean> {
         try {
-            const token = Auth._utils.getTokenInHeader(req, Auth._errorMessageToken);
+            const token = Auth._UtilsInst.getTokenInHeader(req, AuthMessage.errorMessageToken);
             let userId: undefined | string;
-            const decodedToken = await Auth._JSONWebToken
-                .verifyJWT(token, process.env.SECRET || "", {});           
+            const decodedToken = await Auth._JSONWebTokenInst.verifyJWT(token, process.env.SECRET || "", {});           
             if (decodedToken) {
                 userId = decodedToken.userId;
             }
-            if (req.body.userId && req.body.userId !== userId) {
-                throw Error(`${Auth._userIdNotCorrect}`);
+            if (req.body.userId && (req.body.userId !== userId)) {
+                throw Error(`${AuthMessage.userIdNotCorrect}`);
             } else {
                 next();
-                return true;
+                return true;              
             }
         } catch (e: any) {
-            res.status(401).json({ error: e.message || Auth._unauthorized })
-            return null;
+            res.status(401).json({ error: e.message || AuthMessage.unauthorized })
+            return false;
         }
     }
 }

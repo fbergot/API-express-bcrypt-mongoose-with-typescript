@@ -12,8 +12,9 @@ var __assign = (this && this.__assign) || function () {
 };
 exports.__esModule = true;
 var product_1 = require("../models/product");
+var fs = require("fs");
 /**
- * Controller for all routes
+ * Controller for all routes product
  * @export
  * @class ProductController
  */
@@ -73,8 +74,11 @@ var ProductController = /** @class */ (function () {
      * @memberof ProductController
      */
     ProductController.prototype.update = function (req, res, next) {
+        var _a;
         var filter = { _id: req.params.id };
-        product_1.modelProd.updateOne(filter, __assign(__assign({}, req.body), filter))
+        // test if new image or not
+        var newData = req.file ? __assign(__assign({}, JSON.parse(req.body.thing)), { imageUrl: req.protocol + "://" + req.get('host') + "/images/" + ((_a = req.file) === null || _a === void 0 ? void 0 : _a.filename) }) : __assign({}, req.body);
+        product_1.modelProd.updateOne(filter, __assign(__assign({}, newData), filter))
             .then(function () { return res.status(200).json({ message: 'Objet modifié' }); })["catch"](function (e) { return res.status(400).json({ error: e.message }); });
     };
     /**
@@ -87,8 +91,19 @@ var ProductController = /** @class */ (function () {
      */
     ProductController.prototype["delete"] = function (req, res, next) {
         var filter = { _id: req.params.id };
-        product_1.modelProd.deleteOne(filter)
-            .then(function (product) { return res.status(200).json(product); })["catch"](function (e) { return res.status(400).json({ message: e.message }); });
+        // find
+        product_1.modelProd.findOne(filter)
+            .then(function (product) {
+            var fileName = product.imageUrl.split('/images/')[1];
+            // find filename & remove file
+            fs.unlink("images/" + fileName, function (err) {
+                if (err)
+                    throw err;
+                // delete item according to filter
+                product_1.modelProd.deleteOne(filter)
+                    .then(function (objStatus) { return res.status(200).json(objStatus); })["catch"](function (e) { return res.status(400).json({ message: e.message }); });
+            });
+        })["catch"](function (e) { return res.status(404).json({ error: e.message }); });
     };
     return ProductController;
 }());

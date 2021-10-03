@@ -18,7 +18,6 @@ export default class Connection implements BasicConnectionInterface{
 
     /**
      * Connection DB
-     * @static
      * @param {string} urlMongoDb
      * @param {{}} options
      * @param {Mongoose} mongoose

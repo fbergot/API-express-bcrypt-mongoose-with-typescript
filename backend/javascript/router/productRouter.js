@@ -10,6 +10,6 @@ router.get("/:id", Auth_1["default"]._verifAuth, controller.findOne);
 router.get("/", Auth_1["default"]._verifAuth, controller.find);
 ;
 router.post("/", Auth_1["default"]._verifAuth, multer_config_1["default"], controller.save);
-router.put("/:id", Auth_1["default"]._verifAuth, controller.update);
+router.put("/:id", Auth_1["default"]._verifAuth, multer_config_1["default"], controller.update);
 router["delete"]("/:id", Auth_1["default"]._verifAuth, controller["delete"]);
 exports["default"] = router;

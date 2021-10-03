@@ -9,6 +9,11 @@ var Crypto_1 = require("./Crypto");
 var JSONwebToken_1 = require("./JSONwebToken");
 var Utils_1 = require("./Utils");
 var memoized_1 = require("../memo/memoized");
+/**
+ * Allow get unique instance memoized of class
+ * @export
+ * @class Factory
+ */
 var Factory = /** @class */ (function () {
     function Factory(BcryptInstance, ConnectionInstance, CryptoInstance, JSONWebTokenInstance, UtilsInstance) {
         this.BcryptMemo = BcryptInstance;
