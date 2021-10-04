@@ -25,13 +25,13 @@ export default class Factory {
     JSONWebTokenMemo:  () => any;
     UtilsMemo: () => any;
 
-    constructor(BcryptInstance: callAll, ConnectionInstance: callAll,
-        CryptoInstance: callAll, JSONWebTokenInstance: callAll, UtilsInstance: callAll) {
-        this.BcryptMemo = BcryptInstance;
-        this.ConnectionMemo = ConnectionInstance;
-        this.CryptoMemo = CryptoInstance;
-        this.JSONWebTokenMemo = JSONWebTokenInstance;
-        this.UtilsMemo = UtilsInstance;
+    constructor(BcryptInstMemo: callAll, ConnectionInstMemo: callAll,
+        CryptoInstMemo: callAll, JSONWebTokenInstMemo: callAll, UtilsInstMemo: callAll) {
+        this.BcryptMemo = BcryptInstMemo;
+        this.ConnectionMemo = ConnectionInstMemo;
+        this.CryptoMemo = CryptoInstMemo;
+        this.JSONWebTokenMemo = JSONWebTokenInstMemo;
+        this.UtilsMemo = UtilsInstMemo;
     }
     InstanceBcrypt(): Bcrypt {     
         return this.BcryptMemo();

@@ -12,11 +12,11 @@ dotenv.config();
 if (!process.env.SECRET) {
     factory.InstanceCrypto().generateSecretRandom(crypto, 48, "hex")
       .then((secretRandom: string) => process.env.SECRET = secretRandom)
-      .catch((err: any) => console.error(err.message));
+      .catch((err: Error) => console.error(err.message));
 }
 
 const options = {
-  useNewUrlParser: true,
+  useNewUrlParser: true, 
   useUnifiedTopology: true,
 };
 

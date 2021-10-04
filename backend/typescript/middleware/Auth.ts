@@ -1,7 +1,8 @@
-import * as express from 'express';
-import * as jwt from "jsonwebtoken";
+import { Request, Response } from 'express';
 import { AuthMessage } from '../enum/enum';
 import { factory } from '../class/Factory';
+import Utils from '../class/Utils';
+import JSONWebToken from '../class/JSONwebToken';
 
 /**
  * For auth users
@@ -14,10 +15,14 @@ import { factory } from '../class/Factory';
  * @class Auth
  */
 export default class Auth {
-    static _expressMod = express;
-    static _jwtMod =  jwt;
-    static _UtilsInst = factory.InstanceUtils();
-    static _JSONWebTokenInst = factory.InstanceJSONWebToken();
+
+    UtilsInst: Utils;
+    JSONWebTokenInst: JSONWebToken;
+
+    constructor(UtilsInstance: Utils, JSONWebTokenInstance: JSONWebToken) {
+        this.UtilsInst = UtilsInstance;
+        this.JSONWebTokenInst = JSONWebTokenInstance;
+    }
     /**
      * For verif auth (with token)
      * @param {express.Request} req
@@ -27,11 +32,11 @@ export default class Auth {
      * @memberof Auth
      */
 
-    static async _verifAuth (req: express.Request, res: express.Response, next: CallableFunction) :Promise<boolean> {
+    async verifAuth (req: Request, res: Response, next: CallableFunction) :Promise<boolean> {
         try {
-            const token = Auth._UtilsInst.getTokenInHeader(req, AuthMessage.errorMessageToken);
+            const token = this.UtilsInst.getTokenInHeader(req, AuthMessage.errorMessageToken);
             let userId: undefined | string;
-            const decodedToken = await Auth._JSONWebTokenInst.verifyJWT(token, process.env.SECRET || "", {});           
+            const decodedToken = await this.JSONWebTokenInst.verifyJWT(token, process.env.SECRET || "", {});           
             if (decodedToken) {
                 userId = decodedToken.userId;
             }

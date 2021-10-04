@@ -36,10 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var express = require("express");
-var jwt = require("jsonwebtoken");
 var enum_1 = require("../enum/enum");
-var Factory_1 = require("../class/Factory");
 /**
  * For auth users
  * @static
@@ -51,7 +48,9 @@ var Factory_1 = require("../class/Factory");
  * @class Auth
  */
 var Auth = /** @class */ (function () {
-    function Auth() {
+    function Auth(UtilsInstance, JSONWebTokenInstance) {
+        this.UtilsInst = UtilsInstance;
+        this.JSONWebTokenInst = JSONWebTokenInstance;
     }
     /**
      * For verif auth (with token)
@@ -61,16 +60,16 @@ var Auth = /** @class */ (function () {
      * @return {Promise<boolean>}
      * @memberof Auth
      */
-    Auth._verifAuth = function (req, res, next) {
+    Auth.prototype.verifAuth = function (req, res, next) {
         return __awaiter(this, void 0, void 0, function () {
             var token, userId, decodedToken, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        token = Auth._UtilsInst.getTokenInHeader(req, enum_1.AuthMessage.errorMessageToken);
+                        token = this.UtilsInst.getTokenInHeader(req, enum_1.AuthMessage.errorMessageToken);
                         userId = void 0;
-                        return [4 /*yield*/, Auth._JSONWebTokenInst.verifyJWT(token, process.env.SECRET || "", {})];
+                        return [4 /*yield*/, this.JSONWebTokenInst.verifyJWT(token, process.env.SECRET || "", {})];
                     case 1:
                         decodedToken = _a.sent();
                         if (decodedToken) {
@@ -93,10 +92,6 @@ var Auth = /** @class */ (function () {
             });
         });
     };
-    Auth._expressMod = express;
-    Auth._jwtMod = jwt;
-    Auth._UtilsInst = Factory_1.factory.InstanceUtils();
-    Auth._JSONWebTokenInst = Factory_1.factory.InstanceJSONWebToken();
     return Auth;
 }());
 exports["default"] = Auth;

@@ -21,16 +21,19 @@ export default class Utils {
      * @returns {(number | boolean)}
      * @memberof Utils
      */
-    normalizePort(val: string): number | boolean {
-        if (isNaN(parseInt(val, 10))) {
-            throw Error(`invalid port`);
-        } else {
-            var port = parseInt(val, 10);
+    normalizePort(val: string | number): number {
+        let port: undefined | number;
+        if (typeof val === 'string') {
+            if (isNaN(parseInt(val, 10))) {
+                throw Error(`Invalid port`);
+            } else {
+                port = parseInt(val, 10);
+            }           
         }
-        if (port >= 0) {
+        if (port && port >= 0) {
           return port;
         }
-        return false;
+        throw Error('Invalid port');
     }
 
     /**

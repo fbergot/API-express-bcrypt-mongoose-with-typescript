@@ -15,12 +15,12 @@ var memoized_1 = require("../memo/memoized");
  * @class Factory
  */
 var Factory = /** @class */ (function () {
-    function Factory(BcryptInstance, ConnectionInstance, CryptoInstance, JSONWebTokenInstance, UtilsInstance) {
-        this.BcryptMemo = BcryptInstance;
-        this.ConnectionMemo = ConnectionInstance;
-        this.CryptoMemo = CryptoInstance;
-        this.JSONWebTokenMemo = JSONWebTokenInstance;
-        this.UtilsMemo = UtilsInstance;
+    function Factory(BcryptInstMemo, ConnectionInstMemo, CryptoInstMemo, JSONWebTokenInstMemo, UtilsInstMemo) {
+        this.BcryptMemo = BcryptInstMemo;
+        this.ConnectionMemo = ConnectionInstMemo;
+        this.CryptoMemo = CryptoInstMemo;
+        this.JSONWebTokenMemo = JSONWebTokenInstMemo;
+        this.UtilsMemo = UtilsInstMemo;
     }
     Factory.prototype.InstanceBcrypt = function () {
         return this.BcryptMemo();

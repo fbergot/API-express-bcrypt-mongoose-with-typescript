@@ -1,4 +1,5 @@
 import * as express from "express";
+import { factory } from "../class/Factory";
 import Controller from "../controller/ProductController";
 import Auth from "../middleware/Auth";
 import multer from '../middleware/multer-config';
@@ -6,12 +7,13 @@ import multer from '../middleware/multer-config';
 
 const router: express.Router = express.Router();
 const controller = new Controller;
+const auth = new Auth(factory.InstanceUtils(), factory.InstanceJSONWebToken());
 
-router.get(`/:id`, Auth._verifAuth, controller.findOne);
-router.get(`/`, Auth._verifAuth, controller.find);;
-router.post(`/`, Auth._verifAuth, multer, controller.save);
-router.put(`/:id`, Auth._verifAuth, multer, controller.update);
-router.delete(`/:id`, Auth._verifAuth, controller.delete);
+router.get(`/:id`, (req, res, next) => auth.verifAuth(req, res, next), controller.findOne);
+router.get(`/`, (req, res, next) => auth.verifAuth(req, res, next), controller.find);;
+router.post(`/`, (req, res, next) => auth.verifAuth(req, res, next), multer, controller.save);
+router.put(`/:id`, (req, res, next) => auth.verifAuth(req, res, next), multer, controller.update);
+router.delete(`/:id`, (req, res, next) => auth.verifAuth(req, res, next), controller.delete);
 
 export default router;
 

@@ -29,7 +29,7 @@ export default class Connection implements BasicConnectionInterface{
             await mongoose.connect(urlMongoDb, options)
             console.log(`${this.connectionOk}`);
             return true;
-        } catch (e:any) {
+        } catch (e: any) {
             console.error(` ${this.connectionNotOk} : ${e.message}`)
             return false;
         }            
