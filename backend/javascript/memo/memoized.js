@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 /**
- * Memoized instance (with closure)
+ * Memoized instance of class (with closure)
  * @export
  * @param {classAllTypes} Class
  * @param {{ module: any }} paramsObj

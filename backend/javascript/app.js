@@ -21,12 +21,12 @@ var options = {
 Factory_1.factory.InstanceConnection().connect(process.env.mongoUrl || "", options, mongoose);
 var app = express();
 // base URL
-var uriProduct = "/api/stuff";
-var uriAuthUser = "/api/auth";
+var baseUrlProduct = "/api/stuff";
+var baseUrlAuthUser = "/api/auth";
 app.use(express.json());
 app.use(Factory_1.factory.InstanceUtils().setHeadersCORS);
 app.use("/images", express.static('images'));
 // add routers
-app.use(uriProduct, productRouter_1["default"]);
-app.use(uriAuthUser, userRouter_1["default"]);
+app.use(baseUrlProduct, productRouter_1["default"]);
+app.use(baseUrlAuthUser, userRouter_1["default"]);
 exports["default"] = app;

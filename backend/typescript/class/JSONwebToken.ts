@@ -44,10 +44,10 @@ export default class JSONWebToken {
      * @returns {Promise<any>}
      * @memberof JSONWebToken
      */
-    verifyJWT(token: string, secret: jwt.Secret|jwt.GetPublicKeyOrSecret, options: any): Promise<any> {
+    verifyJWT(token: string, secret: jwt.Secret | jwt.GetPublicKeyOrSecret, options: any): Promise<any> {
         return new Promise((resolve, reject) => {
             this.JWT.verify(token, secret, options, (err, decoded) => {
-                err ? reject(err) : resolve(decoded)
+                err ? reject(err) : resolve(decoded);
             })
         })
     }

@@ -25,16 +25,16 @@ factory.InstanceConnection().connect(process.env.mongoUrl || "", options, mongoo
 
 const app: express.Application = express();
 // base URL
-const uriProduct = "/api/stuff";
-const uriAuthUser = "/api/auth";
+const baseUrlProduct = "/api/stuff";
+const baseUrlAuthUser = "/api/auth";
 
 app.use(express.json());
 app.use(factory.InstanceUtils().setHeadersCORS);
 app.use("/images", express.static('images'))
 
 // add routers
-app.use(uriProduct, ProductRouter);
-app.use(uriAuthUser, UserRouter);
+app.use(baseUrlProduct, ProductRouter);
+app.use(baseUrlAuthUser, UserRouter);
 
 
 export default app;

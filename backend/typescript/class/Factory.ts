@@ -25,6 +25,15 @@ export default class Factory {
     JSONWebTokenMemo:  () => any;
     UtilsMemo: () => any;
 
+    /**
+     *Creates an instance of Factory.
+     * @param {callAll} BcryptInstMemo
+     * @param {callAll} ConnectionInstMemo
+     * @param {callAll} CryptoInstMemo
+     * @param {callAll} JSONWebTokenInstMemo
+     * @param {callAll} UtilsInstMemo
+     * @memberof Factory
+     */
     constructor(BcryptInstMemo: callAll, ConnectionInstMemo: callAll,
         CryptoInstMemo: callAll, JSONWebTokenInstMemo: callAll, UtilsInstMemo: callAll) {
         this.BcryptMemo = BcryptInstMemo;
@@ -33,18 +42,43 @@ export default class Factory {
         this.JSONWebTokenMemo = JSONWebTokenInstMemo;
         this.UtilsMemo = UtilsInstMemo;
     }
+    /**
+     * Return an unique instance of Bcrypt
+     * @returns {Bcrypt}
+     * @memberof Factory
+     */
     InstanceBcrypt(): Bcrypt {     
         return this.BcryptMemo();
     }  
+    /**
+     * Return an unique instance of Connection
+     * @returns {Connection}
+     * @memberof Factory
+     */
     InstanceConnection(): Connection {     
         return this.ConnectionMemo();
     }  
+    /**
+     * Return an unique instance of Crypto
+     * @returns {Crypto}
+     * @memberof Factory
+     */
     InstanceCrypto(): Crypto {     
         return this.CryptoMemo();
     }  
+    /**
+     * Return an unique instance of JsonWebToken
+     * @returns {JSONWebToken}
+     * @memberof Factory
+     */
     InstanceJSONWebToken(): JSONWebToken {     
         return this.JSONWebTokenMemo();
     }  
+    /**
+     * Return an unique instance of Utils
+     * @returns {Utils}
+     * @memberof Factory
+     */
     InstanceUtils(): Utils {     
         return this.UtilsMemo();
     }  

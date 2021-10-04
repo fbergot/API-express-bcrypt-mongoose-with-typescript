@@ -15,6 +15,15 @@ var memoized_1 = require("../memo/memoized");
  * @class Factory
  */
 var Factory = /** @class */ (function () {
+    /**
+     *Creates an instance of Factory.
+     * @param {callAll} BcryptInstMemo
+     * @param {callAll} ConnectionInstMemo
+     * @param {callAll} CryptoInstMemo
+     * @param {callAll} JSONWebTokenInstMemo
+     * @param {callAll} UtilsInstMemo
+     * @memberof Factory
+     */
     function Factory(BcryptInstMemo, ConnectionInstMemo, CryptoInstMemo, JSONWebTokenInstMemo, UtilsInstMemo) {
         this.BcryptMemo = BcryptInstMemo;
         this.ConnectionMemo = ConnectionInstMemo;
@@ -22,18 +31,43 @@ var Factory = /** @class */ (function () {
         this.JSONWebTokenMemo = JSONWebTokenInstMemo;
         this.UtilsMemo = UtilsInstMemo;
     }
+    /**
+     * Return an unique instance of Bcrypt
+     * @returns {Bcrypt}
+     * @memberof Factory
+     */
     Factory.prototype.InstanceBcrypt = function () {
         return this.BcryptMemo();
     };
+    /**
+     * Return an unique instance of Connection
+     * @returns {Connection}
+     * @memberof Factory
+     */
     Factory.prototype.InstanceConnection = function () {
         return this.ConnectionMemo();
     };
+    /**
+     * Return an unique instance of Crypto
+     * @returns {Crypto}
+     * @memberof Factory
+     */
     Factory.prototype.InstanceCrypto = function () {
         return this.CryptoMemo();
     };
+    /**
+     * Return an unique instance of JsonWebToken
+     * @returns {JSONWebToken}
+     * @memberof Factory
+     */
     Factory.prototype.InstanceJSONWebToken = function () {
         return this.JSONWebTokenMemo();
     };
+    /**
+     * Return an unique instance of Utils
+     * @returns {Utils}
+     * @memberof Factory
+     */
     Factory.prototype.InstanceUtils = function () {
         return this.UtilsMemo();
     };
