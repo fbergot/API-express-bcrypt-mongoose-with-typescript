@@ -42,8 +42,8 @@ export default class Utils {
      * @memberof Utils
      */
     logHandler(port: number|boolean, server:http.Server): void {
-        const address: any = server ? server.address() : undefined;
-        const bind: string = typeof address === "string" ? `pipe: ${address}` : `port: ${port ? port : "invalid"}`;
+        const address = server ? server.address() : undefined;
+        const bind = typeof address === "string" ? `pipe: ${address}` : `port: ${port ? port : "invalid"}`;
         console.log("listening on " + bind);
     }
 

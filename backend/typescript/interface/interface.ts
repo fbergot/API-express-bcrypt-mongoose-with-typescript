@@ -21,9 +21,8 @@ export interface BasicUserController {
 
 export interface PayloadInterface {
     userId: string,
-    token: string
 }
-
+ 
 export interface BcryptInterface {
     bcyptHash: (data: string | Buffer, salt: number) => Promise<string>,
     bcryptCompare: (plaintextData: string, hash: string) => Promise<boolean>

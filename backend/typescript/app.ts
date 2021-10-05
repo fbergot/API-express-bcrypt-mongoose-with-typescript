@@ -27,7 +27,7 @@ const app: express.Application = express();
 // base URL
 const baseUrlProduct = "/api/stuff";
 const baseUrlAuthUser = "/api/auth";
-
+ 
 app.use(express.json());
 app.use(factory.InstanceUtils().setHeadersCORS);
 app.use("/images", express.static('images'))

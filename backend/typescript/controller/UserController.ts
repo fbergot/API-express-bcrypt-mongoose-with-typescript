@@ -67,7 +67,7 @@ export default class UserController implements BasicUserController {
               return false;
             }
             const secret = process.env.SECRET ?? "";
-            const paylaodSigned = await factory.InstanceJSONWebToken().signJWT({ userId: user._id, token: "TOKEN" }, secret, {expiresIn: '24h'});
+            const paylaodSigned = await factory.InstanceJSONWebToken().signJWT({ userId: user._id }, secret, {expiresIn: '24h'});
             res.status(200).json({ userId: user.id, token: paylaodSigned });
             return true;
         } catch (e: any) {

@@ -20,5 +20,5 @@ export default function memoized(Class: classAllTypes, paramsObj: { module: any 
         if (lastReturn) return lastReturn;
         lastReturn = new Class(paramsObj);
         return lastReturn;
-    };
+    }; 
 }
